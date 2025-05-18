@@ -1,0 +1,741 @@
+﻿<Window x:Class="DATK1.Views.Trang_Chu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DATK1.Views" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="Trang_Chu" Height="450" Width="1200">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="RoundedButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="5"
+                            Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#D3D3D3"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Padding" Value="5,2"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <TabControl Grid.ColumnSpan="2">
+            <!-- Quản lý Tài khoản -->
+            <TabItem Header="Quản lý Tài khoản" Width="120" Margin="0,0,5,0" Background="LightBlue" BorderBrush="Orange" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Hàng 0: Các nút -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,0,10" HorizontalAlignment="Left" Grid.ColumnSpan="3">
+                        <Button Content="Đổi mật khẩu" Style="{StaticResource RoundedButton}" Width="90" Margin="5"/>
+                        <Button Content="Đăng xuất" Style="{StaticResource RoundedButton}" Width="80" Margin="5"/>
+                        <Grid>
+                            <!-- SearchAccountholder -->
+                            <TextBlock x:Name="SearchAccountTextBlock" Text="Nhập từ khóa tìm kiếm..."
+                                         VerticalAlignment="Center" Foreground="Gray"
+                                         Margin="10,0,10,0" IsHitTestVisible="False"/>
+
+                            <!-- TextBox -->
+                            <TextBox x:Name="SearchAccountTextBox"
+                                       VerticalAlignment="Center" Width="250"
+                                       Text="{Binding NewTextSearch, UpdateSourceTrigger=PropertyChanged}"
+                                       TextChanged="SearchAccountTextBox_TextChanged"/>
+                        </Grid>
+                        <Button Content="Tìm kiếm" Width="100" Command="{Binding TaiKhoan}"/>
+                    </StackPanel>
+
+                    <!-- Hàng 1: DataGrid -->
+                    <DataGrid x:Name="TaiKhoanDataGrid" ItemsSource="{Binding TaiKhoan}" AutoGenerateColumns="False" IsReadOnly="True"
+                  Grid.Row="1" SelectionMode="Single" Margin="0,0,0,10"   SelectedItem="{Binding RowSelectedItem}" Grid.ColumnSpan="3">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding RowSelectedCommand}" 
+                                                       CommandParameter="{Binding RowSelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID Tài khoản" Binding="{Binding ID_TaiKhoan}" Width="300"/>
+                            <DataGridTextColumn Header="Tên đăng nhập" Binding="{Binding Ten_DangNhap}" Width="*"/>
+                            <DataGridTextColumn Header="Mô tả" Binding="{Binding Mo_ta1}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <!-- Quản lý Hàng hóa -->
+            <TabItem Header="Quản lý Hàng hóa" Width="120" Margin="5,0,5,0" Background="LightBlue" BorderBrush="Orange" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Hàng 0: Các nút -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,0,10" HorizontalAlignment="Left" Grid.ColumnSpan="2">
+                        <Button Content="Thêm" Style="{StaticResource RoundedButton}" Width="80" Margin="5"/>
+                        <Button Content="Sửa" Style="{StaticResource RoundedButton}" Width="80" Margin="5"/>
+                        <Button Content="Xóa" Style="{StaticResource RoundedButton}" Width="80" Margin="5"/>
+                        <Grid>
+                            <!-- SearchGoodsholder -->
+                            <TextBlock x:Name="SearchGoodsTextBlock" Text="Nhập từ khóa tìm kiếm..."
+                                         VerticalAlignment="Center" Foreground="Gray"
+                                         Margin="10,0,10,0" IsHitTestVisible="False"/>
+
+                            <!-- TextBox -->
+                            <TextBox x:Name="SearchGoodsTextBox"
+                                     VerticalAlignment="Center" Width="250"
+                                     Text="{Binding NewTextSearch, UpdateSourceTrigger=PropertyChanged}"
+                                     TextChanged="SearchGoodsTextBox_TextChanged"/>
+                        </Grid>
+                        <Button Content="Tìm kiếm" Width="100" Command="{Binding HangHoa}"/>
+                    </StackPanel>
+
+                    <!-- Hàng 1: DataGrid -->
+                    <DataGrid x:Name="HangHoaDataGrid" ItemsSource="{Binding HangHoa}" AutoGenerateColumns="False" IsReadOnly="True"
+                                Grid.Row="1" SelectionMode="Single" Margin="0,0,0,0"   SelectedItem="{Binding RowSelectedItem}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding RowSelectedCommand}" 
+                                     CommandParameter="{Binding RowSelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID Hàng Hóa" Binding="{Binding ID_HangHoa}" Width="*"/>
+                            <DataGridTextColumn Header="Tên hàng hóa" Binding="{Binding Ten_HangHoa}" Width="*"/>
+                            <DataGridTextColumn Header="Số lượng" Binding="{Binding So_Luong}" Width="*"/>
+                            <DataGridTextColumn Header="Mô tả" Binding="{Binding Mo_ta2}" Width="*"/>
+                            <DataGridTextColumn Header="Đơn giá" Binding="{Binding Don_Gia1}" Width="*"/>
+                            <DataGridTextColumn Header="Tổng giá trị hàng hóa" Binding="{Binding Tong_GiaTriHangHoa}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!-- Hàng 2: Actions -->
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                         </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="ID Hàng hóa:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="GoodsIDTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding ID_HangHoa, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Tên hàng hóa:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="GoodsNameTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Ten_HangHoa, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Số lượng:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="GoodsNumberTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding So_Luong, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="3">
+                            <TextBlock Text="Mô tả:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="GoodsDescribeTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Mo_ta2, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Đơn giá:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="GoodsUnitpriceTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Don_Gia1, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="5">
+                            <TextBlock Text="Tổng giá trị hàng hóa:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="GoodsTotalpriceTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Tong_GiaTriHangHoa, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <!-- Quản lý Nhập kho -->
+            <TabItem Header="Quản lý Nhập kho" Width="120" Margin="5,0,5,0" Background="LightBlue" BorderBrush="Orange" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Hàng 0: Các nút -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
+                        <Button Content="Lập phiếu nhập kho" Style="{StaticResource RoundedButton}" Width="120" Margin="5"/>
+                        <Button Content="Sửa phiếu nhập kho" Style="{StaticResource RoundedButton}" Width="120" Margin="5"/>
+                        <Button Content="Xóa phiếu nhập kho" Style="{StaticResource RoundedButton}" Width="120" Margin="5"/>
+                        <Grid>
+                            <!-- SearchInStockholder -->
+                            <TextBlock x:Name="SearchInStockTextBlock" Text="Nhập từ khóa tìm kiếm..."
+                                         VerticalAlignment="Center" Foreground="Gray"
+                                         Margin="10,0,10,0" IsHitTestVisible="False"/>
+
+                            <!-- TextBox -->
+                            <TextBox x:Name="SearchInStockTextBox"
+                                       VerticalAlignment="Center" Width="250"
+                                       Text="{Binding NewTextSearch, UpdateSourceTrigger=PropertyChanged}"
+                                       TextChanged="SearchInStockTextBox_TextChanged"/>
+                        </Grid>
+                        <Button Content="Tìm kiếm" Width="100" Command="{Binding NhapKho}"/>
+                    </StackPanel>
+
+                    <!-- Hàng 1: DataGrid -->
+                    <DataGrid x:Name="NhapKhoDataGrid" ItemsSource="{Binding NhapKho}" AutoGenerateColumns="False" IsReadOnly="True"
+                                Grid.Row="1" SelectionMode="Single" Margin="0,0,0,10"   SelectedItem="{Binding RowSelectedItem}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding RowSelectedCommand}" 
+                               CommandParameter="{Binding RowSelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Số phiếu nhập" Binding="{Binding So_PhieuNhap}" Width="*"/>
+                            <DataGridTextColumn Header="Tên hàng hóa" Binding="{Binding Ten_HangHoa1}" Width="*"/>
+                            <DataGridTextColumn Header="Số lượng nhập" Binding="{Binding So_LuongNhap}" Width="*"/>
+                            <DataGridTextColumn Header="Đơn giá" Binding="{Binding Don_Gia2}" Width="*"/>
+                            <DataGridTextColumn Header="Ngày nhập hàng" Binding="{Binding Ngay_NhapHang}" Width="*"/>
+                            <DataGridTextColumn Header="Chi phí nhập hàng" Binding="{Binding Chi_PhiNhapHang}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!-- Hàng 2: Actions-->
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Số phiếu nhập:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="ImportNumTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding So_PhieuNhap, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Tên hàng hóa:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="GoodsName1TextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Ten_HangHoa1, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Số lượng nhập:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="InputQuantityTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding So_LuongNhap, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="3">
+                            <TextBlock Text="Đơn giá:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="GoodsUnitPrice1TextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Don_Gia2, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Ngày nhập hàng:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="ReceiptDateTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Ngay_NhapHang, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="5">
+                            <TextBlock Text="Chi phí nhập hàng:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="ReceiptCostTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Chi_PhiNhapHang, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <!-- Quản lý Xuất kho -->
+            <TabItem Header="Quản lý Xuất kho" Width="120" Margin="5,0,5,0" Background="LightBlue" BorderBrush="Orange" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Hàng 0: Các nút -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
+                        <Button Content="Lập phiếu xuất kho" Style="{StaticResource RoundedButton}" Width="120" Margin="5"/>
+                        <Button Content="Sửa phiếu xuất kho" Style="{StaticResource RoundedButton}" Width="120" Margin="5"/>
+                        <Button Content="Xóa phiếu xuất kho" Style="{StaticResource RoundedButton}" Width="120" Margin="5"/>
+                        <Grid>
+                            <!-- SearchInStockholder -->
+                            <TextBlock x:Name="SearchOutStockTextBlock" Text="Nhập từ khóa tìm kiếm..."
+                                         VerticalAlignment="Center" Foreground="Gray"
+                                         Margin="10,0,10,0" IsHitTestVisible="False"/>
+
+                            <!-- TextBox -->
+                            <TextBox x:Name="SearchOutStockTextBox"
+                                       VerticalAlignment="Center" Width="250"
+                                       Text="{Binding NewTextSearch, UpdateSourceTrigger=PropertyChanged}"
+                                       TextChanged="SearchOutStockTextBox_TextChanged"/>
+                        </Grid>
+                        <Button Content="Tìm kiếm" Width="100" Command="{Binding XuatKho}"/>
+                    </StackPanel>
+
+                    <!-- Hàng 1: DataGrid -->
+                    <DataGrid x:Name="XuatKhoDataGrid" ItemsSource="{Binding XuatKho}" AutoGenerateColumns="False" IsReadOnly="True"
+                              Grid.Row="1" SelectionMode="Single" Margin="0,0,0,10"   SelectedItem="{Binding RowSelectedItem}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding RowSelectedCommand}" 
+                                   CommandParameter="{Binding RowSelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Số phiếu xuất" Binding="{Binding So_PhieuXuat}" Width="*"/>
+                            <DataGridTextColumn Header="Tên hàng hóa" Binding="{Binding Ten_HangHoa2}" Width="*"/>
+                            <DataGridTextColumn Header="Số lượng xuất" Binding="{Binding So_LuongXuat}" Width="*"/>
+                            <DataGridTextColumn Header="Đơn giá" Binding="{Binding Don_Gia3}" Width="*"/>
+                            <DataGridTextColumn Header="Ngày xuất hàng" Binding="{Binding Ngay_XuatHang}" Width="*"/>
+                            <DataGridTextColumn Header="Chi phí giao dịch" Binding="{Binding Chi_PhiGiaoDich}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!-- Hàng 2: Actions-->
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,0,10">
+                            <TextBlock Text="Số phiếu xuất:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="ExportNumTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding So_PhieuXuat, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Tên hàng hóa:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="GoodsName2TextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Ten_HangHoa2, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Số lượng xuất:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="OutQuantityTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding So_LuongXuat, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="3">
+                            <TextBlock Text="Đơn giá:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="GoodsUnitPrice2TextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Don_Gia3, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Ngày xuất hàng:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="ShippedDateTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Ngay_XuatHang, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="5">
+                            <TextBlock Text="Chi phí giao dịch:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="ShippedCostTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Chi_PhiGiaoDich, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+            </TabItem>
+            <!-- Quản lý Cơ sở chăn nuôi-->
+            <TabItem Header="Quản lý Cơ sở chăn nuôi" Width="180" Margin="5,0,5,0" Background="LightBlue" BorderBrush="Orange" BorderThickness="1">
+                <TabControl>
+                    <TabItem Header="Cơ sở chăn nuôi" Width="120" Margin="5,0,5,0" Background="LightSalmon" BorderBrush="Blue" BorderThickness="1">
+                        <Grid>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Hàng 0: Các nút -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,5,0,10" HorizontalAlignment="Left">
+                                    <Grid>
+                                        <!-- SearchFacilityholder -->
+                                        <TextBlock x:Name="SearchFacilityTextBlock" Text="Nhập từ khóa tìm kiếm..."
+                                                 VerticalAlignment="Center" Foreground="Gray"
+                                                 Margin="10,0,10,0" IsHitTestVisible="False"/>
+
+                                        <!-- TextBox -->
+                                        <TextBox x:Name="SearchFacilityTextBox"
+                                              VerticalAlignment="Center" Width="250"
+                                              Text="{Binding NewTextSearch, UpdateSourceTrigger=PropertyChanged}"
+                                              TextChanged="SearchFacilityTextBox_TextChanged"/>
+                                    </Grid>
+                                    <Button Content="Tìm kiếm" Width="100" Command="{Binding CoSo}"/>
+                                </StackPanel>
+
+                                <!-- Hàng 1: DataGrid -->
+                                <DataGrid x:Name="CoSoDataGrid" ItemsSource="{Binding CoSo}" AutoGenerateColumns="False" IsReadOnly="True"
+                                          Grid.Row="1" SelectionMode="Single" Margin="0,0,0,10"   SelectedItem="{Binding RowSelectedItem}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding RowSelectedCommand}" 
+                                                                   CommandParameter="{Binding RowSelectedItem}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID Cơ sở" Binding="{Binding ID_CoSo}" Width="*"/>
+                                        <DataGridTextColumn Header="Tên Cơ sở" Binding="{Binding Ten_CoSo}" Width="*"/>
+                                        <DataGridTextColumn Header="Chủ cơ sở" Binding="{Binding Chu_CoSo}" Width="*"/>
+                                        <DataGridTextColumn Header="Địa chỉ" Binding="{Binding Dia_Chi}" Width="*"/>
+                                        <DataGridTextColumn Header="Số điện thoại" Binding="{Binding So_DienThoai1}" Width="*"/>
+                                        <DataGridTextColumn Header="Diện tích" Binding="{Binding Dien_Tich}" Width="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Vật Nuôi" Width="120" Margin="5,0,5,0" Background="LightSalmon" BorderBrush="Blue" BorderThickness="1">
+                        <Grid>
+                            <Grid.Resources>
+                                <Style TargetType="Button" x:Key="RoundedButton">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="5"
+                                                        Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center"
+                                                                      VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Background" Value="#D3D3D3"/>
+                                    <Setter Property="BorderBrush" Value="Gray"/>
+                                    <Setter Property="Padding" Value="5,2"/>
+                                    <Setter Property="Margin" Value="5"/>
+                                </Style>
+                            </Grid.Resources>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Hàng 0: Các nút -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
+                                    <Button Content="Thêm vật nuôi" Style="{StaticResource RoundedButton}" Width="100" Margin="5"/>
+                                    <Button Content="Sửa vật nuôi" Style="{StaticResource RoundedButton}" Width="100" Margin="5"/>
+                                    <Button Content="Xóa vật nuôi" Style="{StaticResource RoundedButton}" Width="100" Margin="5"/>
+                                </StackPanel>
+
+                                <!-- Hàng 1: DataGrid -->
+                                <DataGrid x:Name="VatNuoiDataGrid" ItemsSource="{Binding VatNuoi}" AutoGenerateColumns="False" IsReadOnly="True"
+                                            Grid.Row="1" SelectionMode="Single" Margin="0,0,0,10"   SelectedItem="{Binding RowSelectedItem}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding RowSelectedCommand}" 
+                                                                   CommandParameter="{Binding RowSelectedItem}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID Vật Nuôi" Binding="{Binding ID_VatNuoi}" Width="*"/>
+                                        <DataGridTextColumn Header="Loại vật nuôi" Binding="{Binding Loai_VatNuoi}" Width="*"/>
+                                        <DataGridTextColumn Header="Thời gian nuôi" Binding="{Binding Thoi_GianNuoi}" Width="*"/>
+                                        <DataGridTextColumn Header="Trọng lượng" Binding="{Binding Trong_Luong}" Width="*"/>
+                                        <DataGridTextColumn Header="Tiêu thụ" Binding="{Binding Tieu_Thu}" Width="*"/>
+                                        <DataGridTextColumn Header="Tình trạng" Binding="{Binding Tinh_Trang}" Width="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <!-- Hàng 2: Actions-->
+                                <Grid Grid.Row="2" Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="ID Vật nuôi:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBox x:Name="AnimalCodeTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding ID_VatNuoi, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Loại vật nuôi:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBox x:Name="TypeAnimalTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Loai_VatNuoi, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Thời gian nuôi:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBox x:Name="RearTimeTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Thoi_GianNuoi, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3">
+                                        <TextBlock Text="Trọng lượng:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBox x:Name="AnimalWeightTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Trong_Luong, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock Text="Tiêu thụ:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBox x:Name="WeightConsumeTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Tieu_Thu, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="5">
+                                        <TextBlock Text="Tình trạng:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBox x:Name="StateTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Tinh_Trang, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Nhân công" Width="120" Margin="5,0,5,0" Background="LightSalmon" BorderBrush="Blue" BorderThickness="1">
+                        <Grid>
+                            <Grid.Resources>
+                                <Style TargetType="Button" x:Key="RoundedButton">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="5"
+                                                        Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center"
+                                                                      VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Background" Value="#D3D3D3"/>
+                                    <Setter Property="BorderBrush" Value="Gray"/>
+                                    <Setter Property="Padding" Value="5,2"/>
+                                    <Setter Property="Margin" Value="5"/>
+                                </Style>
+                            </Grid.Resources>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Hàng 0: Các nút -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
+                                    <Button Content="Thêm nhân công" Style="{StaticResource RoundedButton}" Width="100" Margin="5"/>
+                                    <Button Content="Sửa nhân công" Style="{StaticResource RoundedButton}" Width="100" Margin="5"/>
+                                    <Button Content="Xóa nhân công" Style="{StaticResource RoundedButton}" Width="100" Margin="5"/>
+                                </StackPanel>
+
+                                <!-- Hàng 1: DataGrid -->
+                                <DataGrid x:Name="NhanCongDataGrid" ItemsSource="{Binding NhanCong}" AutoGenerateColumns="False" IsReadOnly="True"
+                                            Grid.Row="1" SelectionMode="Single" Margin="0,0,0,10"   SelectedItem="{Binding RowSelectedItem}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding RowSelectedCommand}" 
+                                   CommandParameter="{Binding RowSelectedItem}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID Nhân công" Binding="{Binding ID_NhanCong}" Width="*"/>
+                                        <DataGridTextColumn Header="Họ và tên" Binding="{Binding Ho_VaTen}" Width="*"/>
+                                        <DataGridTextColumn Header="Lương" Binding="{Binding luong}" Width="*"/>
+                                        <DataGridTextColumn Header="Ngày nhận việc" Binding="{Binding Ngay_NhanViec}" Width="*"/>
+                                        <DataGridTextColumn Header="Số điện thoại" Binding="{Binding So_DienThoai2}" Width="*"/>
+                                        <DataGridTextColumn Header="Chức vụ" Binding="{Binding Chuc_Vu}" Width="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <!-- Hàng 2: Actions-->
+                                <Grid Grid.Row="2" Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="ID Nhân công:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBox x:Name="EmployeeCodeTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding ID_NhanCong, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Họ và tên:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBox x:Name="FullNameTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Ho_VaTen, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Lương:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBox x:Name="SafaryTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding luong, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3">
+                                        <TextBlock Text="Ngày nhận việc:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBox x:Name="DateReceiptTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Ngay_NhanViec, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock Text="Số điện thoại:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBox x:Name="PhoneNumberTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding So_DienThoai2, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="5">
+                                        <TextBlock Text="Chức vụ:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                                        <TextBox x:Name="PositionTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Chuc_Vu, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <!-- Quản lý chế biến -->
+            <TabItem Header="Quản lý Chế biến" Width="120" Margin="5,0,5,0" Background="LightBlue" BorderBrush="Orange" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Hàng 0: Các nút -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,0,10" HorizontalAlignment="Left">
+                        <Button Content="Lập phiếu chế biến" Style="{StaticResource RoundedButton}" Width="120" Margin="5"/>
+                        <Button Content="Xóa phiếu chế biến" Style="{StaticResource RoundedButton}" Width="120" Margin="5"/>
+                        <Grid>
+                            <!-- SearchProcessingholder -->
+                            <TextBlock x:Name="SearchProcessingTextBlock" Text="Nhập từ khóa tìm kiếm..."
+                                         VerticalAlignment="Center" Foreground="Gray"
+                                         Margin="10,0,10,0" IsHitTestVisible="False"/>
+
+                            <!-- TextBox -->
+                            <TextBox x:Name="SearchProcessingTextBox"
+                                       VerticalAlignment="Center" Width="250"
+                                       Text="{Binding NewTextSearch, UpdateSourceTrigger=PropertyChanged}"
+                                       TextChanged="SearchProcessingTextBox_TextChanged"/>
+                        </Grid>
+                        <Button Content="Tìm kiếm" Width="100" Command="{Binding CheBien}"/>
+                    </StackPanel>
+
+                    <!-- Hàng 1: DataGrid -->
+                    <DataGrid x:Name="CheBienDataGrid" ItemsSource="{Binding CheBien}" AutoGenerateColumns="False" IsReadOnly="True"
+                                Grid.Row="1" SelectionMode="Single" Margin="0,0,0,10"   SelectedItem="{Binding RowSelectedItem}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding RowSelectedCommand}" 
+                               CommandParameter="{Binding RowSelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID Chế biến" Binding="{Binding ID_CheBien}" Width="*"/>
+                            <DataGridTextColumn Header="Số lượng chế biến" Binding="{Binding So_LuongCheBien}" Width="*"/>
+                            <DataGridTextColumn Header="Ngày chế biến" Binding="{Binding Ngay_CheBien}" Width="*"/>
+                            <DataGridTextColumn Header="Hạn sử dụng" Binding="{Binding Han_SuDung}" Width="*"/>
+                            <DataGridTextColumn Header="Tên sản phẩm" Binding="{Binding Ten_SanPham}" Width="*"/>
+                            <DataGridTextColumn Header="Trọng lượng sản phẩm" Binding="{Binding Trong_LuongSanPham}" Width="*"/>
+                            <DataGridTextColumn Header="Chi phí chế biến" Binding="{Binding Chi_PhiCheBien}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!-- Hàng 2: Actions-->
+                    <Grid Grid.Row="2" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="ID Chế biến:" HorizontalAlignment="Center" Margin="5,0,5,0"/>
+                            <TextBox x:Name="ProcessCodeTextBox" Width="150" HorizontalAlignment="Center" Text="{Binding ID_CheBien, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Số lượng chế biến:" HorizontalAlignment="Center" Margin="5,0,5,0"/>
+                            <TextBox x:Name="NumProcessTextBox" Width="150" HorizontalAlignment="Center" Text="{Binding So_LuongCheBien, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Ngày chế biến:" HorizontalAlignment="Center" Margin="5,0,5,0"/>
+                            <TextBox x:Name="DateProcessTextBox" Width="150" HorizontalAlignment="Center" Text="{Binding Ngay_CheBien, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="3">
+                            <TextBlock Text="Hạn sử dụng:" HorizontalAlignment="Center" Margin="5,0,5,0"/>
+                            <TextBox x:Name="ExpiryDateTextBox" Width="150" HorizontalAlignment="Center" Text="{Binding Han_SuDung, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Tên sản phẩm:" HorizontalAlignment="Center" Margin="5,0,5,0"/>
+                            <TextBox x:Name="NameProductTextBox" Width="150" HorizontalAlignment="Center" Text="{Binding Ten_SanPham, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="5">
+                            <TextBlock Text="Trọng lượng sản phẩm:" HorizontalAlignment="Center" Margin="5,0,5,0"/>
+                            <TextBox x:Name="WeightProductTextBox" Width="150" HorizontalAlignment="Center" Text="{Binding Trong_LuongSanPham, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="6">
+                            <TextBlock Text="Chi phí chế biến:" HorizontalAlignment="Center" Margin="5,0,5,0"/>
+                            <TextBox x:Name="CashProcessTextBox" Width="150" HorizontalAlignment="Center" Text="{Binding Chi_PhiCheBien, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <!-- Quản lý Hóa đơn -->
+            <TabItem Header="Quản lý Hóa đơn" Width="120" Margin="5,0,5,0" Background="LightBlue" BorderBrush="Orange" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Hàng 0: Các nút -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,0,10" HorizontalAlignment="Left" Grid.ColumnSpan="2">
+                        <Button Content="Lập hóa đơn" Style="{StaticResource RoundedButton}" Width="80" Margin="5"/>
+                        <Button Content="Xóa hóa đơn" Style="{StaticResource RoundedButton}" Width="80" Margin="5"/>
+                        <Grid>
+                            <!-- SearchBillholder -->
+                            <TextBlock x:Name="SearchBillTextBlock" Text="Nhập từ khóa tìm kiếm..."
+                                         VerticalAlignment="Center" Foreground="Gray"
+                                         Margin="10,0,10,0" IsHitTestVisible="False"/>
+
+                            <!-- TextBox -->
+                            <TextBox x:Name="SearchBillTextBox"
+                                       VerticalAlignment="Center" Width="250"
+                                       Text="{Binding NewTextSearch, UpdateSourceTrigger=PropertyChanged}"
+                                      TextChanged="SearchBillTextBox_TextChanged"/>
+                        </Grid>
+                        <Button Content="Tìm kiếm" Width="100" Command="{Binding HoaDon}"/>
+                    </StackPanel>
+
+                    <!-- Hàng 1: DataGrid -->
+                    <DataGrid x:Name="HoaDonDataGrid" ItemsSource="{Binding HoaDon}" AutoGenerateColumns="False" IsReadOnly="True"
+                                Grid.Row="1" SelectionMode="Single" Margin="0,0,0,10"   SelectedItem="{Binding RowSelectedItem}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding RowSelectedCommand}" 
+                                                      CommandParameter="{Binding RowSelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID Hóa đơn" Binding="{Binding ID_HoaDon}" Width="*"/>
+                            <DataGridTextColumn Header="Trọng lượng sản phẩm 1" Binding="{Binding Trong_LuongSanPham1}" Width="*"/>
+                            <DataGridTextColumn Header="Đơn giá" Binding="{Binding Don_Gia4}" Width="*"/>
+                            <DataGridTextColumn Header="Doanh thu" Binding="{Binding Doanh_Thu}" Width="*"/>
+                            <DataGridTextColumn Header="Ngày bán" Binding="{Binding Ngay_Ban}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!-- Hàng 2: Actions-->
+                    <Grid Grid.Row="2" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="ID Hóa đơn:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="BillCodeTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding ID_HoaDon, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Trọng lượng sản phẩm 1:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="WeightProduct1TextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Trong_LuongSanPham1, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Đơn giá:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="ProductUnitPriceTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Don_Gia4, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="3">
+                            <TextBlock Text="Doanh Thu:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="CashProductTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Doanh_Thu, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Ngày bán:" HorizontalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="SelltDateTextBox" Width="180" HorizontalAlignment="Center" Text="{Binding Ngay_Ban, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

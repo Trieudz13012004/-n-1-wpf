@@ -1,0 +1,16 @@
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\DATK1.csproj.AssemblyReference.cache
+D:\ĐỒ ÁN 1\DATK1\DATK1\bin\Debug\DATK1.exe.config
+D:\ĐỒ ÁN 1\DATK1\DATK1\bin\Debug\DATK1.exe
+D:\ĐỒ ÁN 1\DATK1\DATK1\bin\Debug\DATK1.pdb
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\Views\MainWindow.g.cs
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\App.g.cs
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\DATK1_MarkupCompile.cache
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\DATK1_MarkupCompile.lref
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\Views\MainWindow.baml
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\DATK1.g.resources
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\DATK1.Properties.Resources.resources
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\DATK1.csproj.GenerateResource.cache
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\DATK1.csproj.CoreCompileInputs.cache
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\DATK1.exe
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\DATK1.pdb
+D:\ĐỒ ÁN 1\DATK1\DATK1\obj\Debug\App.baml
